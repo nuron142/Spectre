@@ -1,7 +1,6 @@
 package `in`.sunil.spectre.di
 
 import `in`.sunil.spectre.ui.SpectreApplication
-import `in`.sunil.spectre.ui.activity.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -14,5 +13,4 @@ interface AppComponent {
 
     fun inject(spectreApplication: SpectreApplication)
 
-    fun inject(mainActivity: MainActivity)
 }
