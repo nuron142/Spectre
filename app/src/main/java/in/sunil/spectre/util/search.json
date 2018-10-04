@@ -116,20 +116,17 @@
           {
             "id": "2HWXxzgBIr0RMSZmvMZeJU",
             "name": "YBN Almighty Jay",
-            "type": "artist",
-            "uri": "spotify:artist:2HWXxzgBIr0RMSZmvMZeJU"
+            "type": "artist"
           },
           {
             "id": "3gGUMEwIX6XodWsYEvKSal",
             "name": "YBN Nahmir",
-            "type": "artist",
-            "uri": "spotify:artist:3gGUMEwIX6XodWsYEvKSal"
+            "type": "artist"
           },
           {
             "id": "7d3WFRME3vBY2cgoP38RDo",
             "name": "Lil Skies",
-            "type": "artist",
-            "uri": "spotify:artist:7d3WFRME3vBY2cgoP38RDo"
+            "type": "artist"
           }
         ],
         "id": "4uWt8UP9SnsOXCEE1hhDtJ",

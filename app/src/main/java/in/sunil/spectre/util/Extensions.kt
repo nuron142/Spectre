@@ -39,3 +39,7 @@ fun delayOnMainThread(block: () -> Unit, delay: Long, timeUnit: TimeUnit = TimeU
 fun Any.getJson(): String? {
     return Gson().toJson(this)
 }
+
+fun <T> String.toClassData(classz: Class<T>): T? {
+    return Gson().fromJson(this, classz)
+}

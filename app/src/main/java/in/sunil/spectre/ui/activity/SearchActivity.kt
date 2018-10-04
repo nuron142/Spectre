@@ -3,7 +3,10 @@ package `in`.sunil.spectre.ui.activity
 import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivitySearchBinding
 import `in`.sunil.spectre.network.NetworkService
+import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.ui.SpectreApplication
+import `in`.sunil.spectre.util.getJson
+import `in`.sunil.spectre.util.toClassData
 import `in`.sunil.spectre.util.workOnBackgroundThread
 import android.app.Activity
 import android.content.Intent
@@ -75,6 +78,10 @@ class SearchActivity : AppCompatActivity() {
             searchDisposable = workOnBackgroundThread({
 
                 val inputStream = networkService.getSearchQuery(query)
+
+                val searchResponse = inputStream?.toClassData(SearchResponse::class.java)
+
+                Log.d(TAG, "Testing4 : " + searchResponse?.getJson())
             })
 
         } else {
