@@ -1,8 +1,10 @@
 package `in`.sunil.spectre.di
 
-import `in`.sunil.spectre.spectre.Spectre
+import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.ui.SpectreApplication
 import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -17,7 +19,7 @@ class AppModule {
 
     private val spectreApplication: SpectreApplication
 
-    constructor(spectreApplication: SpectreApplication){
+    constructor(spectreApplication: SpectreApplication) {
         this.spectreApplication = spectreApplication
     }
 
@@ -26,6 +28,13 @@ class AppModule {
     @Singleton
     fun provideContext(): Context {
         return spectreApplication
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(spectreApplication)
     }
 
     @Provides
@@ -37,7 +46,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideSpectre(context: Context, okHttpClient: OkHttpClient): Spectre {
-        return Spectre(context, okHttpClient)
+    fun provideSpectre(context: Context, okHttpClient: OkHttpClient): NetworkService {
+        return NetworkService(context, okHttpClient)
     }
 }

@@ -29,32 +29,6 @@ fun workOnBackgroundThread(block: () -> Unit, onError: (() -> Unit)? = null): Di
     }, onError, Schedulers.io())
 }
 
-fun Bitmap.circleCentreCrop(width: Int = Int.MAX_VALUE, height: Int = Int.MAX_VALUE): Bitmap {
-
-    val minWidth = if (width > 0) Math.min(this.width, width) else this.width
-    val minHeight = if (height > 0) Math.min(this.height, height) else this.height
-
-    val size = Math.min(minWidth, minHeight)
-
-    val bitmap = ThumbnailUtils.extractThumbnail(this, size, size)
-
-    val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(output)
-
-    val paint = Paint()
-    val rect = Rect(0, 0, bitmap.width, bitmap.height)
-
-    paint.isAntiAlias = true
-    canvas.drawARGB(0, 0, 0, 0)
-    paint.color = 0xff424242.toInt()
-    canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint)
-    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-
-    canvas.drawBitmap(bitmap, rect, rect, paint)
-
-    return output
-}
-
 fun Any.getJson(): String? {
     return Gson().toJson(this)
 }

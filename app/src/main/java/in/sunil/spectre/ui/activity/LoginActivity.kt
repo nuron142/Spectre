@@ -2,7 +2,11 @@ package `in`.sunil.spectre.ui.activity
 
 import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivityLoginBinding
+import `in`.sunil.spectre.network.NetworkService
+import `in`.sunil.spectre.ui.SpectreApplication
+import `in`.sunil.spectre.util.isNotEmpty
 import android.content.Intent
+import android.content.SharedPreferences
 import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +17,7 @@ import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 
 /**
@@ -22,6 +27,9 @@ import io.reactivex.disposables.CompositeDisposable
 class LoginActivity : AppCompatActivity() {
 
     val TAG = LoginActivity::class.java.simpleName
+
+    @Inject
+    lateinit var networkService: NetworkService
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -39,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (application as SpectreApplication).appComponent.inject(this)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
@@ -81,7 +90,14 @@ class LoginActivity : AppCompatActivity() {
             accessCode = response.code
         }
 
-        Log.d(TAG,"Testing4 : accessToken : $accessToken, accessCode: $accessCode")
+        Log.d(TAG, "Testing4 : accessToken : $accessToken, accessCode: $accessCode")
+
+        networkService.setAccessToken(accessToken)
+
+        if (accessToken.isNotEmpty()) {
+
+            SearchActivity.launch(this)
+        }
     }
 
     private fun getRedirectUri(): Uri {
