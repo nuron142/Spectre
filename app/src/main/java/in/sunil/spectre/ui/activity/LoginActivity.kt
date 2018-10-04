@@ -4,12 +4,13 @@ import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivityLoginBinding
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.ui.SpectreApplication
+import `in`.sunil.spectre.util.delayOnMainThread
 import `in`.sunil.spectre.util.isNotEmpty
 import android.content.Intent
-import android.content.SharedPreferences
 import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -17,6 +18,7 @@ import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 import io.reactivex.disposables.CompositeDisposable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -51,7 +53,11 @@ class LoginActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        onRequestTokenClicked()
+        binding.login.setOnClickListener {
+
+            onRequestTokenClicked()
+        }
+
     }
 
     override fun onDestroy() {
@@ -65,7 +71,8 @@ class LoginActivity : AppCompatActivity() {
         AuthenticationClient.openLoginActivity(this, AUTH_CODE_REQUEST_CODE, request)
     }
 
-    fun onRequestTokenClicked() {
+    private fun onRequestTokenClicked() {
+
         val request = getAuthenticationRequest(AuthenticationResponse.Type.TOKEN)
         AuthenticationClient.openLoginActivity(this, AUTH_TOKEN_REQUEST_CODE, request)
     }
@@ -74,7 +81,6 @@ class LoginActivity : AppCompatActivity() {
         return AuthenticationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
                 .setShowDialog(false)
                 .setScopes(arrayOf("user-read-email"))
-                .setCampaign("your-campaign-token")
                 .build()
     }
 
@@ -94,11 +100,25 @@ class LoginActivity : AppCompatActivity() {
 
         networkService.setAccessToken(accessToken)
 
-        if (accessToken.isNotEmpty()) {
+        handleLoginCallback(accessToken)
+    }
 
-            SearchActivity.launch(this)
+
+    private fun handleLoginCallback(accessToken: String?) {
+
+        if (accessToken.isNotEmpty()) {
+            Snackbar.make(binding.root, "Login Successful", Snackbar.LENGTH_SHORT).show()
+
+            delayOnMainThread({
+                SearchActivity.launch(this)
+            }, 800, TimeUnit.MILLISECONDS)
+
+        } else {
+
+            Snackbar.make(binding.root, "Login Failed. Please try again", Snackbar.LENGTH_SHORT).show()
         }
     }
+
 
     private fun getRedirectUri(): Uri {
         return Uri.Builder()

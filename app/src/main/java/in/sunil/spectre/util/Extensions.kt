@@ -1,12 +1,11 @@
 package `in`.sunil.spectre.util
 
-import android.graphics.*
-import android.media.ThumbnailUtils
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Callable
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -27,6 +26,14 @@ fun workOnBackgroundThread(block: () -> Unit, onError: (() -> Unit)? = null): Di
         block.invoke()
         true
     }, onError, Schedulers.io())
+}
+
+fun delayOnMainThread(block: () -> Unit, delay: Long, timeUnit: TimeUnit = TimeUnit.MILLISECONDS): Disposable {
+
+    return RxUtils.delayCompletable(Callable {
+        block.invoke()
+        true
+    }, delay, timeUnit, AndroidSchedulers.mainThread())
 }
 
 fun Any.getJson(): String? {

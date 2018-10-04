@@ -11,7 +11,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.jakewharton.rxbinding2.view.RxView
+import android.view.View
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -45,12 +45,13 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         (application as SpectreApplication).appComponent.inject(this)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
 
         disposable.add(RxTextView.textChanges(binding.searchEdittext)
-                .debounce(400, TimeUnit.MILLISECONDS)
+                .debounce(600, TimeUnit.MILLISECONDS)
                 .map { charSequence -> charSequence.toString() }
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,13 +59,10 @@ class SearchActivity : AppCompatActivity() {
                     getBitMapFromNetwork(query)
                 }, { e -> Log.d(TAG, "" + e.message) }))
 
-        disposable.add(RxView.clicks(binding.search)
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    getBitMapFromNetwork(binding.searchEdittext.text.toString())
-                }, { e -> Log.d(TAG, "" + e.message) }))
+
+        binding.closeButtonLayout.setOnClickListener {
+            binding.searchEdittext.setText("")
+        }
     }
 
     private fun getBitMapFromNetwork(query: String) {
@@ -72,10 +70,16 @@ class SearchActivity : AppCompatActivity() {
         searchDisposable?.dispose()
 
         if (query.isNotEmpty()) {
+
+            binding.closeButtonLayout.visibility = View.VISIBLE
             searchDisposable = workOnBackgroundThread({
 
                 val inputStream = networkService.getSearchQuery(query)
             })
+
+        } else {
+
+            binding.closeButtonLayout.visibility = View.INVISIBLE
         }
 
     }

@@ -30,7 +30,8 @@
 
         <activity
             android:name=".ui.activity.SearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoToolbarAppTheme" />
 
     </application>
 
