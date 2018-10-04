@@ -33,6 +33,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoToolbarAppTheme" />
 
+        <activity
+            android:name=".ui.activity.ArtistDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoToolbarAppTheme" />
+
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.ui.SpectreApplication
 import `in`.sunil.spectre.util.delayOnMainThread
 import `in`.sunil.spectre.util.isNotEmpty
+import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.net.Uri
@@ -28,7 +29,16 @@ import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
 
-    val TAG = LoginActivity::class.java.simpleName
+    companion object {
+
+        val TAG = ArtistDetailActivity::class.java.simpleName
+
+        fun launch(activity: Activity) {
+
+            val intent = Intent(activity, LoginActivity::class.java)
+            activity.startActivity(intent)
+        }
+    }
 
     @Inject
     lateinit var networkService: NetworkService

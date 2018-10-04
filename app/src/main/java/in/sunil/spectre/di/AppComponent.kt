@@ -1,6 +1,7 @@
 package `in`.sunil.spectre.di
 
 import `in`.sunil.spectre.ui.SpectreApplication
+import `in`.sunil.spectre.ui.activity.ArtistDetailActivity
 import `in`.sunil.spectre.ui.activity.LoginActivity
 import `in`.sunil.spectre.ui.activity.SearchActivity
 import dagger.Component
@@ -18,5 +19,7 @@ interface AppComponent {
     fun inject(loginActivity: LoginActivity)
 
     fun inject(searchActivity: SearchActivity)
+
+    fun inject(artistDetailActivity: ArtistDetailActivity)
 
 }

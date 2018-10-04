@@ -29,7 +29,7 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
 
-        val TAG = LoginActivity::class.java.simpleName
+        val TAG = SearchActivity::class.java.simpleName
 
         fun launch(activity: Activity) {
 
@@ -59,16 +59,17 @@ class SearchActivity : AppCompatActivity() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ query ->
-                    getBitMapFromNetwork(query)
+                    getSearchList(query)
                 }, { e -> Log.d(TAG, "" + e.message) }))
 
 
         binding.closeButtonLayout.setOnClickListener {
             binding.searchEdittext.setText("")
+//            ArtistDetailActivity.launch(this)
         }
     }
 
-    private fun getBitMapFromNetwork(query: String) {
+    private fun getSearchList(query: String) {
 
         searchDisposable?.dispose()
 
@@ -77,10 +78,7 @@ class SearchActivity : AppCompatActivity() {
             binding.closeButtonLayout.visibility = View.VISIBLE
             searchDisposable = workOnBackgroundThread({
 
-                val inputStream = networkService.getSearchQuery(query)
-
-                val searchResponse = inputStream?.toClassData(SearchResponse::class.java)
-
+                val searchResponse = networkService.getSearchQuery(query)
                 Log.d(TAG, "Testing4 : " + searchResponse?.getJson())
             })
 
