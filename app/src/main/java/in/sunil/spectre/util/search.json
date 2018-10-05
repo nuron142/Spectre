@@ -30,7 +30,6 @@
         ],
         "name": "Summer Nights",
         "release_date": "2018-07-09",
-        "total_tracks": 9,
         "type": "album"
       },
       {
@@ -62,7 +61,6 @@
         ],
         "name": "twicetagram",
         "release_date": "2017-10-30",
-        "release_date_precision": "day",
         "total_tracks": 13,
         "type": "album"
       }

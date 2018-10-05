@@ -3,7 +3,8 @@ package `in`.sunil.spectre.di
 import `in`.sunil.spectre.ui.SpectreApplication
 import `in`.sunil.spectre.ui.activity.ArtistDetailActivity
 import `in`.sunil.spectre.ui.activity.LoginActivity
-import `in`.sunil.spectre.ui.activity.SearchActivity
+import `in`.sunil.spectre.ui.activity.search.SearchActivity
+import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -21,5 +22,7 @@ interface AppComponent {
     fun inject(searchActivity: SearchActivity)
 
     fun inject(artistDetailActivity: ArtistDetailActivity)
+
+    fun inject(searchActivityViewModel: SearchActivityViewModel)
 
 }

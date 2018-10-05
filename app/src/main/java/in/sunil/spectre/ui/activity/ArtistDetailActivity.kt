@@ -3,18 +3,20 @@ package `in`.sunil.spectre.ui.activity
 import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivityArtistBinding
 import `in`.sunil.spectre.network.NetworkService
+import `in`.sunil.spectre.network.api.artist.ArtistDetailResponse
 import `in`.sunil.spectre.ui.SpectreApplication
 import `in`.sunil.spectre.util.getJson
 import `in`.sunil.spectre.util.isNotEmpty
-import `in`.sunil.spectre.util.workOnBackgroundThread
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -26,10 +28,13 @@ class ArtistDetailActivity : AppCompatActivity() {
 
         val TAG = ArtistDetailActivity::class.java.simpleName
 
-        fun launch(activity: Activity) {
+        val ARTIST_ID = "artistId"
 
-            val intent = Intent(activity, ArtistDetailActivity::class.java)
-            activity.startActivity(intent)
+        fun launch(context: Context, artistId: String) {
+
+            val intent = Intent(context, ArtistDetailActivity::class.java)
+            intent.putExtra(ARTIST_ID, artistId)
+            context.startActivity(intent)
         }
     }
 
@@ -48,19 +53,28 @@ class ArtistDetailActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_artist)
 
-        getArtistDetail("7n2Ycct7Beij7Dj7meI4X0")
+        val artistID = intent.getStringExtra(ARTIST_ID)
+        getArtistDetail(artistID)
     }
 
-    fun getArtistDetail(artistID: String?) {
+    private fun getArtistDetail(artistID: String?) {
 
         if (artistID?.isNotEmpty() == true) {
 
-            artistDetailDisposable = workOnBackgroundThread({
+            artistDetailDisposable = networkService.getArtistDetailFlowable(artistID)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ artistDetailResponse ->
 
-                val artistDetailResponse = networkService.getArtistDetail(artistID)
-                Log.d(TAG, "Testing4 : " + artistDetailResponse?.getJson())
-            })
+                        Log.d(TAG, "Testing4 : " + artistDetailResponse.getJson())
+                        handleArtistDetailResponse(artistDetailResponse)
+
+                    }, { e -> Log.e(TAG, "Error Testing4 : $e") })
         }
+    }
+
+    private fun handleArtistDetailResponse(artistDetailResponse: ArtistDetailResponse) {
+
     }
 
     override fun onDestroy() {

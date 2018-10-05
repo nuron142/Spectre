@@ -8,5 +8,5 @@ import com.google.gson.annotations.SerializedName
 class TrackList {
 
     @SerializedName("items")
-    val items: List<Album>? = null
+    val items: List<Track>? = null
 }
