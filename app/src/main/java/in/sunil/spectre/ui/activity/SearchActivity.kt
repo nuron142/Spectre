@@ -3,10 +3,12 @@ package `in`.sunil.spectre.ui.activity
 import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivitySearchBinding
 import `in`.sunil.spectre.network.NetworkService
-import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.ui.SpectreApplication
+import `in`.sunil.spectre.ui.adapter.SearchAdapter
+import `in`.sunil.spectre.ui.adapter.SearchArtistViewModel
+import `in`.sunil.spectre.ui.adapter.SearchTrackViewModel
+import `in`.sunil.spectre.ui.adapter.ViewModel
 import `in`.sunil.spectre.util.getJson
-import `in`.sunil.spectre.util.toClassData
 import `in`.sunil.spectre.util.workOnBackgroundThread
 import android.app.Activity
 import android.content.Intent
@@ -21,6 +23,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import android.support.v7.widget.LinearLayoutManager
+
 
 /**
  * Created by Sunil on 10/4/18.
@@ -29,7 +33,7 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
 
-        val TAG = SearchActivity::class.java.simpleName
+        val TAG: String = SearchActivity::class.java.simpleName
 
         fun launch(activity: Activity) {
 
@@ -42,6 +46,8 @@ class SearchActivity : AppCompatActivity() {
     lateinit var networkService: NetworkService
 
     private lateinit var binding: ActivitySearchBinding
+
+    private var searchAdapter: SearchAdapter? = null
 
     private var disposable = CompositeDisposable()
     private var searchDisposable: Disposable? = null
@@ -67,6 +73,26 @@ class SearchActivity : AppCompatActivity() {
             binding.searchEdittext.setText("")
 //            ArtistDetailActivity.launch(this)
         }
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+
+        val dataSet = ArrayList<ViewModel>()
+
+        dataSet.add(SearchArtistViewModel("Sunil"))
+        dataSet.add(SearchTrackViewModel("Darth Vader"))
+        dataSet.add(SearchArtistViewModel("Spectre"))
+        dataSet.add(SearchTrackViewModel("Commander Shepard"))
+        dataSet.add(SearchArtistViewModel("Citadel"))
+        dataSet.add(SearchTrackViewModel("Tali"))
+        dataSet.add(SearchArtistViewModel("Liara"))
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        searchAdapter = SearchAdapter(dataSet)
+        binding.recyclerView.adapter = searchAdapter
+
     }
 
     private fun getSearchList(query: String) {

@@ -19,7 +19,6 @@
             android:layout_marginEnd="50dp"
             android:scaleType="fitCenter"
             android:src="@drawable/spotify_logo_green"
-            app:layout_constraintBottom_toTopOf="@+id/login"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -95,6 +94,17 @@
             </FrameLayout>
 
         </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTextLayout" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
