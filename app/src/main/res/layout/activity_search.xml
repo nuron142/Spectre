@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="vm"
-            type="in.sunil.spectre.ui.activity.search.SearchActivityViewModel" />
+            type="in.sunil.spectre.ui.activity.search.SearchActivityViewModel"/>
 
     </data>
 
@@ -26,7 +26,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"/>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/searchTextLayout"
@@ -56,14 +56,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/searchButtonLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <FrameLayout
                 android:id="@+id/searchButtonLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="44dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"
                 android:paddingStart="4dp"
@@ -76,22 +76,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/search_icon" />
+                    android:src="@drawable/search_icon"/>
 
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/closeButtonLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="44dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:onClick="@{vm.onCancelButtonCLick()}"
-                android:visibility="@{vm.showCloseButton, default=gone}"
+                android:visibility="@{vm.showCloseButton, default=visible}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -100,7 +100,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/close_icon" />
+                    android:src="@drawable/close_icon"/>
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:layoutDirection="ltr"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="@{vm.showProgress}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guideline"/>
 
             </FrameLayout>
 
@@ -116,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchTextLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/searchTextLayout"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

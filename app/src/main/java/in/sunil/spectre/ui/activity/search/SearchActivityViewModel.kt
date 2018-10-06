@@ -27,7 +27,7 @@ class SearchActivityViewModel {
 
     companion object {
 
-        const val VIEW_TYPE_ARTIST = 0
+        const val VIEW_TYPE_ALBUM = 0
         const val VIEW_TYPE_TRACK = 1
         const val VIEW_TYPE_HEADER = 2
     }
@@ -42,6 +42,7 @@ class SearchActivityViewModel {
     val showCloseButton = ObservableBoolean(false)
     private val searchActivityService: ISearchActivityService
 
+    val showProgress = ObservableBoolean(false)
     var searchQuery = ObservableField<String>("")
 
     constructor(searchActivityService: ISearchActivityService) {
@@ -59,7 +60,9 @@ class SearchActivityViewModel {
         disposable.add(searchQuery.toFlowable()
                 .map { query ->
 
+                    showProgress.set(query.isNotEmpty())
                     showCloseButton.set(query.isNotEmpty())
+
                     return@map query
                 }
                 .debounce(600, TimeUnit.MILLISECONDS)
@@ -76,6 +79,7 @@ class SearchActivityViewModel {
 
         if (query.isNotEmpty()) {
 
+            showProgress.set(true)
             showCloseButton.set(true)
 
             searchDisposable = networkService.getSearchQueryFlowable(query)
@@ -86,13 +90,23 @@ class SearchActivityViewModel {
                         Log.d(SearchActivity.TAG, "Testing4 : " + searchResponse?.getJson())
                         handleSearchResponse(searchResponse)
 
-                    }, { e -> Log.e(SearchActivity.TAG, "Error Testing4: $e") })
+                    }, { e ->
+
+                        Log.e(SearchActivity.TAG, "Error Testing4: $e")
+                        handleSearchFailed()
+                    })
 
         } else {
 
             dataSet.clear()
+            showProgress.set(false)
             showCloseButton.set(false)
         }
+    }
+
+    private fun handleSearchFailed() {
+
+        showProgress.set(false)
     }
 
 
@@ -100,6 +114,7 @@ class SearchActivityViewModel {
 
         searchResponse?.apply {
 
+            showProgress.set(false)
             dataSet.clear()
 
             if (albums?.items?.size ?: 0 > 0) {
@@ -143,6 +158,7 @@ class SearchActivityViewModel {
         dataSet.clear()
 
         searchQuery.set("")
+        showProgress.set(false)
         showCloseButton.set(false)
     }
 

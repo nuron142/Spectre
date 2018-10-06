@@ -2,8 +2,11 @@ package `in`.sunil.spectre.ui.activity.artistdetail
 
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.network.api.artist.ArtistDetailResponse
-import `in`.sunil.spectre.util.getJson
+import `in`.sunil.spectre.network.api.toptracks.ArtistTopAlbumsResponse
+import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchAlbumViewModel
+import `in`.sunil.spectre.ui.adapter.ViewModel
 import `in`.sunil.spectre.util.isNotEmpty
+import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.util.Log
@@ -40,6 +43,10 @@ class ArtistDetailActivityViewModel {
     val albumReleaseDate = ObservableField<String>("")
     val artistImageUrl = ObservableField<String>("")
 
+    val showTopTracks = ObservableBoolean(false)
+    var topTracksDataSet = ObservableArrayList<ViewModel>()
+
+
     constructor(artistId: String?, artistDetailActivityService: IArtistDetailActivityService) {
 
         this.artistId = artistId
@@ -69,10 +76,9 @@ class ArtistDetailActivityViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ artistDetailResponse ->
 
-                        Log.d(TAG, "Testing4 : " + artistDetailResponse.getJson())
                         handleArtistDetailResponse(artistDetailResponse)
 
-                    }, { e -> Log.e(TAG, "Error Testing4 : $e") })
+                    }, { e -> Log.e(TAG, "Error : $e") })
 
             artistDetailDisposable?.let { disposable.add(it) }
 
@@ -100,7 +106,42 @@ class ArtistDetailActivityViewModel {
         }
 
         genres.set(genreString.toString())
+
+        artistId?.let { id -> getArtistTopTracks(id) }
     }
+
+    private fun getArtistTopTracks(artistId: String) {
+
+        disposable.add(networkService.getArtistTopAlbumsFlowable(artistId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ artistTopAlbumsResponse ->
+
+                    handleArtistTopTracksResponse(artistTopAlbumsResponse)
+
+                }, { e -> Log.e(TAG, "Error : $e") }))
+
+    }
+
+
+    private fun handleArtistTopTracksResponse(artistTopAlbumsResponse: ArtistTopAlbumsResponse?) {
+
+        artistTopAlbumsResponse?.apply {
+
+            topTracksDataSet.clear()
+
+            showTopTracks.set(items?.isNotEmpty() == true)
+
+            items?.forEach { album ->
+
+                if (album.name != null) {
+                    val searchArtistViewModel = SearchAlbumViewModel(album)
+                    topTracksDataSet.add(searchArtistViewModel)
+                }
+            }
+        }
+    }
+
 
     fun onCloseButtonClick() = {
 

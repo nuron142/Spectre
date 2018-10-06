@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.4"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -34,6 +34,19 @@
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:placeholder="@{@drawable/default_album_art}"/>
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@android:color/transparent"
+            android:layoutDirection="ltr"
+            android:indeterminate="true"
+            android:visibility="@{vm.showProgress}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline"/>
+
         <TextView
             android:id="@+id/artistName"
             android:layout_width="0dp"
@@ -41,7 +54,7 @@
             android:ellipsize="end"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:maxLines="2"
             android:text="@{vm.artistName, default=`Death Star`}"
             android:textColor="@color/blackGrape80"
@@ -56,7 +69,7 @@
             android:id="@+id/genres"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -74,11 +87,38 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:layout_gravity="center"
-            android:tint="@color/white"
             android:onClick="@{vm.onCloseButtonClick()}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/close_icon"/>
+            android:src="@drawable/close_icon_white"/>
+
+
+        <TextView
+            android:id="@+id/trackTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ellipsize="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="monospace"
+            android:text="TOP TRACKS"
+            android:textColor="@color/blackGrape90"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genres"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trackTitle"/>
+
 
     </android.support.constraint.ConstraintLayout>
 </layout>

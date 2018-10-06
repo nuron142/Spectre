@@ -4,6 +4,7 @@ import `in`.sunil.spectre.network.api.search.Album
 import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import `in`.sunil.spectre.ui.adapter.ViewModel
 import android.databinding.ObservableField
+import java.text.SimpleDateFormat
 
 /**
  * Created by Sunil on 10/5/18.
@@ -17,11 +18,11 @@ class SearchAlbumViewModel : ViewModel {
     val albumReleaseDate = ObservableField<String>("")
     val albumImageUrl = ObservableField<String>("")
 
-    private var onClickAction: (String) -> Unit
+    private var onClickAction: ((String) -> Unit)?
 
     private val album: Album
 
-    constructor(album: Album, onClickAction: (String) -> Unit) {
+    constructor(album: Album, onClickAction: ((String) -> Unit)? = null) {
 
         this.album = album
         this.onClickAction = onClickAction
@@ -33,23 +34,33 @@ class SearchAlbumViewModel : ViewModel {
 
         album.apply {
 
-            albumName.set(name)
+            albumName.set(name?.capitalize())
 
             albumArtists.set(artists?.firstOrNull()?.name)
-            albumReleaseDate.set(releaseDate)
+
+            releaseDate?.let { dateString -> albumReleaseDate.set(getFormattedReleaseDate(dateString)) }
 
             albumImageUrl.set(images?.firstOrNull()?.url)
         }
 
     }
 
+    private fun getFormattedReleaseDate(dateString: String): String {
+
+        val format = SimpleDateFormat("yyyy-MM-dd")
+        val date = format.parse(dateString)
+
+        val newFormat = SimpleDateFormat("MMM yyyy")
+        return newFormat.format(date)
+    }
+
     fun onClick() = {
 
-        album.artists?.firstOrNull()?.id?.let { id -> onClickAction.invoke(id) }
+        album.artists?.firstOrNull()?.id?.let { id -> onClickAction?.invoke(id) }
     }
 
     override fun getType(): Int {
 
-        return SearchActivityViewModel.VIEW_TYPE_ARTIST
+        return SearchActivityViewModel.VIEW_TYPE_ALBUM
     }
 }

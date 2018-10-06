@@ -32,9 +32,9 @@ fun loadImage(imageView: ImageView, imageUrl: String?, placeholder: Drawable) {
     val glide = Glide.with(imageView.context)
 
     glide.load(imageUrl)
-            .apply(RequestOptions()
-                    .placeholder(placeholder)
-                    .centerCrop())
+            .apply(RequestOptions
+                    .centerCropTransform()
+                    .placeholder(placeholder))
             .transition(withCrossFade())
             .into(imageView)
 }

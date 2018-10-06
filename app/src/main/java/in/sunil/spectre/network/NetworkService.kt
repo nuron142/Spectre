@@ -2,6 +2,7 @@ package `in`.sunil.spectre.network
 
 import `in`.sunil.spectre.network.api.artist.ArtistDetailResponse
 import `in`.sunil.spectre.network.api.search.SearchResponse
+import `in`.sunil.spectre.network.api.toptracks.ArtistTopAlbumsResponse
 import `in`.sunil.spectre.util.toClassData
 import android.content.Context
 import android.util.Log
@@ -89,5 +90,23 @@ class NetworkService {
             return@Callable artistDetailResponse
         })
     }
+
+
+    fun getArtistTopAlbumsFlowable(artistID: String): Flowable<ArtistTopAlbumsResponse> {
+
+        return Flowable.fromCallable(Callable {
+
+            val url = "$SPOTIFY_BASE_URL/artists/$artistID/albums"
+
+            val request = Request.Builder().url(url).build()
+
+            val response = okHttpClient.newCall(request).execute()
+
+            val topAlbumsResponse = response.body()?.string()?.toClassData(ArtistTopAlbumsResponse::class.java)
+
+            return@Callable topAlbumsResponse
+        })
+    }
+
 
 }
