@@ -94,12 +94,11 @@ class SearchActivityViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ searchResponse ->
 
-                        Log.d(SearchActivity.TAG, "Testing4 : " + searchResponse?.getJson())
                         handleSearchResponse(searchResponse)
 
                     }, { e ->
 
-                        Log.e(SearchActivity.TAG, "Error Testing4: $e")
+                        Log.e(SearchActivity.TAG, "Error : $e")
                         handleSearchFailed()
                     })
 

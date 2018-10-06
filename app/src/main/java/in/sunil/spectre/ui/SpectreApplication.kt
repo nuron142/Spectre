@@ -6,8 +6,6 @@ import `in`.sunil.spectre.di.DaggerAppComponent
 import android.app.Application
 import io.reactivex.plugins.RxJavaPlugins
 
-
-
 /**
  * Created by Sunil on 10/1/18.
  */

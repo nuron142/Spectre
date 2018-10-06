@@ -59,11 +59,9 @@ class NetworkService {
             val url = "$SPOTIFY_BASE_URL/search?q=$query&type=album,track"
 
             val request = Request.Builder().url(url).build()
-
             val response = okHttpClient.newCall(request).execute()
 
-            val searchResponse = response.body()?.string()?.toClassData(SearchResponse::class.java)
-            return@Callable searchResponse
+            return@Callable response.body()?.string()?.toClassData(SearchResponse::class.java)
         })
     }
 
@@ -74,12 +72,9 @@ class NetworkService {
             val url = "$SPOTIFY_BASE_URL/artists/$artistID"
 
             val request = Request.Builder().url(url).build()
-
             val response = okHttpClient.newCall(request).execute()
 
-            val artistDetailResponse = response.body()?.string()?.toClassData(ArtistDetailResponse::class.java)
-
-            return@Callable artistDetailResponse
+            return@Callable response.body()?.string()?.toClassData(ArtistDetailResponse::class.java)
         })
     }
 
@@ -91,12 +86,9 @@ class NetworkService {
             val url = "$SPOTIFY_BASE_URL/artists/$artistID/albums"
 
             val request = Request.Builder().url(url).build()
-
             val response = okHttpClient.newCall(request).execute()
 
-            val artistTopAlbumsResponse = response.body()?.string()?.toClassData(ArtistTopAlbumsResponse::class.java)
-
-            return@Callable artistTopAlbumsResponse
+            return@Callable response.body()?.string()?.toClassData(ArtistTopAlbumsResponse::class.java)
         })
     }
 
