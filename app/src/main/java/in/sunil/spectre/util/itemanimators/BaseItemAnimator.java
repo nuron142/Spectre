@@ -29,12 +29,17 @@ import android.view.animation.Interpolator;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * This implementation of {@link RecyclerView.ItemAnimator} provides basic
  * animations on remove, add, and move events that happen to the items in
  * a RecyclerView. RecyclerView uses a CollapsingItemAnimator by default.
  *
  * @see RecyclerView#setItemAnimator(RecyclerView.ItemAnimator)
+ */
+
+/**
+ * Created by mikepenz on 08.01.16.
+ * https://github.com/mikepenz/ItemAnimators
  */
 public abstract class BaseItemAnimator<T> extends SimpleItemAnimator {
     private static final boolean DEBUG = false;

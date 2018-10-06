@@ -18,10 +18,6 @@ object RxUtils {
 
     val TAG = RxUtils::class.java.simpleName
 
-    fun <T> completable(func: Callable<out T>): Disposable {
-        return completable(func, {}, Schedulers.newThread())
-    }
-
     fun <T> completable(func: Callable<out T>, onError: (() -> Unit)?,
                         subscribeScheduler: Scheduler): Disposable {
 

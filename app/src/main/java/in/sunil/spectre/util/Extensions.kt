@@ -16,6 +16,14 @@ import java.util.concurrent.TimeUnit
  * Created by Sunil on 26/09/17.
  */
 
+fun String?.isEmpty(): Boolean {
+    return this == null || this.length == 0
+}
+
+fun String?.isNotEmpty(): Boolean {
+    return this?.length ?: 0 > 0
+}
+
 fun workOnMainThread(block: () -> Unit, onError: (() -> Unit)? = null): Disposable {
 
     return RxUtils.completable(Callable {

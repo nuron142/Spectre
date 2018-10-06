@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by mikepenz on 08.01.16.
+ * https://github.com/mikepenz/ItemAnimators
  */
 public class DefaultAnimator<T> extends BaseItemAnimator<T> {
     // ADD ANIMATION METHODS

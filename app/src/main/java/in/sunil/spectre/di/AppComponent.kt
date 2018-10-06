@@ -2,8 +2,9 @@ package `in`.sunil.spectre.di
 
 import `in`.sunil.spectre.ui.SpectreApplication
 import `in`.sunil.spectre.ui.activity.artistdetail.ArtistDetailActivity
-import `in`.sunil.spectre.ui.activity.LoginActivity
+import `in`.sunil.spectre.ui.activity.login.LoginActivity
 import `in`.sunil.spectre.ui.activity.artistdetail.ArtistDetailActivityViewModel
+import `in`.sunil.spectre.ui.activity.login.LoginActivityViewModel
 import `in`.sunil.spectre.ui.activity.search.SearchActivity
 import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import dagger.Component
@@ -28,5 +29,7 @@ interface AppComponent {
     fun inject(searchActivityViewModel: SearchActivityViewModel)
 
     fun inject(artistDetailActivityViewModel: ArtistDetailActivityViewModel)
+
+    fun inject(loginActivityViewModel: LoginActivityViewModel)
 
 }
