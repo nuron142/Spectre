@@ -47,6 +47,9 @@ class SearchActivityViewModel {
     constructor(searchActivityService: ISearchActivityService) {
 
         this.searchActivityService = searchActivityService
+    }
+
+    fun init() {
 
         setUpViewModel()
     }

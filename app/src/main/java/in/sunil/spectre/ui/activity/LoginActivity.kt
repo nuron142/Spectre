@@ -4,6 +4,7 @@ import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivityLoginBinding
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.ui.SpectreApplication
+import `in`.sunil.spectre.ui.activity.artistdetail.ArtistDetailActivity
 import `in`.sunil.spectre.ui.activity.search.SearchActivity
 import `in`.sunil.spectre.util.delayOnMainThread
 import `in`.sunil.spectre.util.isNotEmpty

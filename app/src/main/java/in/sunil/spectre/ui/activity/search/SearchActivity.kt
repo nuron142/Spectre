@@ -43,6 +43,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchActivityViewModel = SearchActivityViewModel(SearchActivityService(this, binding))
         (application as SpectreApplication).appComponent.inject(searchActivityViewModel)
+        searchActivityViewModel.init()
 
         binding.vm = searchActivityViewModel
         binding.executePendingBindings()

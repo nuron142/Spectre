@@ -6,6 +6,4 @@ package `in`.sunil.spectre.ui.activity.search
 interface ISearchActivityService {
 
     fun openArtistDetailPage(artistId: String)
-
-    fun showTrackPageError()
 }

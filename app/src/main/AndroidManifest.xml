@@ -34,7 +34,7 @@
             android:theme="@style/NoToolbarAppTheme" />
 
         <activity
-            android:name=".ui.activity.ArtistDetailActivity"
+            android:name=".ui.activity.artistdetail.ArtistDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoToolbarAppTheme" />
 
