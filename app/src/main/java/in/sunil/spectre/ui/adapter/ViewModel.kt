@@ -5,5 +5,4 @@ package `in`.sunil.spectre.ui.adapter
  */
 interface ViewModel {
 
-    fun getType(): Int
 }

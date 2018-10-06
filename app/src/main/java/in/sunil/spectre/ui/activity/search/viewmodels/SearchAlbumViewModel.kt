@@ -1,7 +1,6 @@
 package `in`.sunil.spectre.ui.activity.search.viewmodels
 
 import `in`.sunil.spectre.network.api.search.Album
-import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import `in`.sunil.spectre.ui.adapter.ViewModel
 import android.databinding.ObservableField
 import java.text.SimpleDateFormat
@@ -57,10 +56,5 @@ class SearchAlbumViewModel : ViewModel {
     fun onClick() = {
 
         album.artists?.firstOrNull()?.id?.let { id -> onClickAction?.invoke(id) }
-    }
-
-    override fun getType(): Int {
-
-        return SearchActivityViewModel.VIEW_TYPE_ALBUM
     }
 }

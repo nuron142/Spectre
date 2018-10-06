@@ -1,47 +1,33 @@
 package `in`.sunil.spectre.ui.adapter
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableArrayList
+import android.databinding.ObservableList
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import com.android.databinding.library.baseAdapters.BR
-
-import `in`.sunil.spectre.R
-import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
-import android.databinding.ObservableArrayList
-import android.databinding.ObservableList
 
 /**
  * Created by Sunil on 10/5/18.
  */
-class SearchAdapter : RecyclerView.Adapter<BindingHolder> {
+class BindingRecyclerAdapter : RecyclerView.Adapter<BindingHolder> {
 
     private val dataSet: ObservableArrayList<ViewModel>
+    private val viewModelLayoutIdMap: HashMap<Class<out ViewModel>, Int>
 
-    constructor(dataSet: ObservableArrayList<ViewModel>) {
+    constructor(dataSet: ObservableArrayList<ViewModel>, viewModelLayoutIdMap: HashMap<Class<out ViewModel>, Int>) {
 
         this.dataSet = dataSet
+        this.viewModelLayoutIdMap = viewModelLayoutIdMap
+
         setUpListener()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, layoutId: Int): BindingHolder {
 
-        val binding: ViewDataBinding
-
-        val layoutId = when (viewType) {
-
-            SearchActivityViewModel.VIEW_TYPE_ALBUM -> R.layout.item_search_album
-
-            SearchActivityViewModel.VIEW_TYPE_TRACK -> R.layout.item_search_track
-
-            SearchActivityViewModel.VIEW_TYPE_HEADER -> R.layout.item_search_header
-
-            else -> R.layout.item_search_header
-        }
-
-        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
+        val binding: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
 
         return BindingHolder(binding)
     }
@@ -59,7 +45,9 @@ class SearchAdapter : RecyclerView.Adapter<BindingHolder> {
 
     override fun getItemViewType(position: Int): Int {
 
-        return dataSet[position].getType()
+        val viewModel = dataSet[position]
+
+        return viewModelLayoutIdMap[viewModel.javaClass] ?: -1
     }
 
 

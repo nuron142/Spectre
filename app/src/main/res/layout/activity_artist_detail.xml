@@ -103,6 +103,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="monospace"
             android:text="TOP TRACKS"
+            android:visibility="@{vm.showTopTracks}"
             android:textColor="@color/blackGrape90"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"

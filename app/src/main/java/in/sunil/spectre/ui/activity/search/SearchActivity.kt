@@ -3,7 +3,7 @@ package `in`.sunil.spectre.ui.activity.search
 import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivitySearchBinding
 import `in`.sunil.spectre.ui.SpectreApplication
-import `in`.sunil.spectre.ui.adapter.SearchAdapter
+import `in`.sunil.spectre.ui.adapter.BindingRecyclerAdapter
 import `in`.sunil.spectre.util.Utilities
 import `in`.sunil.spectre.util.itemanimators.AlphaCrossFadeAnimator
 import android.annotation.SuppressLint
@@ -33,7 +33,6 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
 
-    private var searchAdapter: SearchAdapter? = null
     private lateinit var searchActivityViewModel: SearchActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,10 +63,10 @@ class SearchActivity : AppCompatActivity() {
         itemAnimator.moveDuration = 200
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        searchAdapter = SearchAdapter(searchActivityViewModel.dataSet)
+        val adapter = BindingRecyclerAdapter(searchActivityViewModel.dataSet, searchActivityViewModel.viewModelLayoutIdMap)
 
         binding.recyclerView.itemAnimator = itemAnimator
-        binding.recyclerView.adapter = searchAdapter
+        binding.recyclerView.adapter = adapter
 
         binding.recyclerView.setOnTouchListener { v, e ->
 

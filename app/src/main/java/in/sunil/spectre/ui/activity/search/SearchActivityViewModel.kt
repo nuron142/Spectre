@@ -1,5 +1,6 @@
 package `in`.sunil.spectre.ui.activity.search
 
+import `in`.sunil.spectre.R
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchAlbumViewModel
@@ -27,15 +28,21 @@ class SearchActivityViewModel {
 
     companion object {
 
-        const val VIEW_TYPE_ALBUM = 0
-        const val VIEW_TYPE_TRACK = 1
-        const val VIEW_TYPE_HEADER = 2
+        val TAG: String = SearchActivityViewModel::class.java.simpleName
     }
 
     @Inject
     lateinit var networkService: NetworkService
 
     var dataSet = ObservableArrayList<ViewModel>()
+
+    val viewModelLayoutIdMap: HashMap<Class<out ViewModel>, Int> = hashMapOf(
+
+            SearchAlbumViewModel::class.java to R.layout.item_search_album,
+            SearchTrackViewModel::class.java to R.layout.item_search_track,
+            SearchHeaderViewModel::class.java to R.layout.item_search_header
+    )
+
     private var disposable = CompositeDisposable()
     private var searchDisposable: Disposable? = null
 

@@ -3,7 +3,7 @@ package `in`.sunil.spectre.ui.activity.artistdetail
 import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivityArtistDetailBinding
 import `in`.sunil.spectre.ui.SpectreApplication
-import `in`.sunil.spectre.ui.adapter.ArtistTrackAdapter
+import `in`.sunil.spectre.ui.adapter.BindingRecyclerAdapter
 import `in`.sunil.spectre.util.itemanimators.AlphaCrossFadeAnimator
 import android.annotation.SuppressLint
 import android.content.Context
@@ -68,7 +68,7 @@ class ArtistDetailActivity : AppCompatActivity() {
         itemAnimator.moveDuration = 200
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val adapter = ArtistTrackAdapter(artistDetailActivityViewModel.topTracksDataSet)
+        val adapter = BindingRecyclerAdapter(artistDetailActivityViewModel.dataSet, artistDetailActivityViewModel.viewModelLayoutIdMap)
 
         binding.recyclerView.itemAnimator = itemAnimator
         binding.recyclerView.adapter = adapter

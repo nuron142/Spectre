@@ -1,7 +1,6 @@
 package `in`.sunil.spectre.ui.activity.search.viewmodels
 
 import `in`.sunil.spectre.network.api.search.Track
-import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import `in`.sunil.spectre.ui.adapter.ViewModel
 import android.databinding.ObservableField
 
@@ -46,10 +45,5 @@ class SearchTrackViewModel : ViewModel {
     fun onClick() = {
 
         track.album?.artists?.firstOrNull()?.id?.let { id -> onClickAction.invoke(id) }
-    }
-
-    override fun getType(): Int {
-
-        return SearchActivityViewModel.VIEW_TYPE_TRACK
     }
 }

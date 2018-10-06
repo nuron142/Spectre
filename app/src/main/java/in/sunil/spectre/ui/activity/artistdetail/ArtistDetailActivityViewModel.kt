@@ -1,5 +1,6 @@
 package `in`.sunil.spectre.ui.activity.artistdetail
 
+import `in`.sunil.spectre.R
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.network.api.artist.ArtistDetailResponse
 import `in`.sunil.spectre.network.api.toptracks.ArtistTopAlbumsResponse
@@ -44,8 +45,12 @@ class ArtistDetailActivityViewModel {
     val artistImageUrl = ObservableField<String>("")
 
     val showTopTracks = ObservableBoolean(false)
-    var topTracksDataSet = ObservableArrayList<ViewModel>()
 
+    var dataSet = ObservableArrayList<ViewModel>()
+    val viewModelLayoutIdMap: HashMap<Class<out ViewModel>, Int> = hashMapOf(
+
+            SearchAlbumViewModel::class.java to R.layout.item_artist_top_album
+    )
 
     constructor(artistId: String?, artistDetailActivityService: IArtistDetailActivityService) {
 
@@ -128,7 +133,7 @@ class ArtistDetailActivityViewModel {
 
         artistTopAlbumsResponse?.apply {
 
-            topTracksDataSet.clear()
+            dataSet.clear()
 
             showTopTracks.set(items?.isNotEmpty() == true)
 
@@ -136,7 +141,7 @@ class ArtistDetailActivityViewModel {
 
                 if (album.name != null) {
                     val searchArtistViewModel = SearchAlbumViewModel(album)
-                    topTracksDataSet.add(searchArtistViewModel)
+                    dataSet.add(searchArtistViewModel)
                 }
             }
         }

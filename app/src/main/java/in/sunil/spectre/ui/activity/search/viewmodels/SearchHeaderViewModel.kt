@@ -1,6 +1,5 @@
 package `in`.sunil.spectre.ui.activity.search.viewmodels
 
-import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import `in`.sunil.spectre.ui.adapter.ViewModel
 import android.databinding.ObservableField
 
@@ -14,10 +13,5 @@ class SearchHeaderViewModel : ViewModel {
     constructor(title: String) {
 
         this.title.set(title)
-    }
-
-    override fun getType(): Int {
-
-        return SearchActivityViewModel.VIEW_TYPE_HEADER
     }
 }
