@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.android.databinding.library.baseAdapters.BR
 
 import `in`.sunil.spectre.R
+import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableList
 
@@ -16,12 +17,6 @@ import android.databinding.ObservableList
  * Created by Sunil on 10/5/18.
  */
 class SearchAdapter : RecyclerView.Adapter<BindingHolder> {
-
-    companion object {
-
-        const val VIEW_TYPE_ARTIST = 0
-        const val VIEW_TYPE_TRACK = 1
-    }
 
     private val dataSet: ObservableArrayList<ViewModel>
 
@@ -67,15 +62,19 @@ class SearchAdapter : RecyclerView.Adapter<BindingHolder> {
 
         val binding: ViewDataBinding
 
-        if (viewType == VIEW_TYPE_ARTIST) {
+        val layoutId =
+                when (viewType) {
 
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                    R.layout.item_search_artist, parent, false)
-        } else {
+                    SearchActivityViewModel.VIEW_TYPE_ARTIST -> R.layout.item_search_album
 
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                    R.layout.item_search_track, parent, false)
-        }
+                    SearchActivityViewModel.VIEW_TYPE_TRACK -> R.layout.item_search_track
+
+                    SearchActivityViewModel.VIEW_TYPE_HEADER -> R.layout.item_search_header
+
+                    else -> R.layout.item_search_header
+                }
+
+        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
 
         return BindingHolder(binding)
     }

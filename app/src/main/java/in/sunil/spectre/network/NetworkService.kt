@@ -4,7 +4,9 @@ import `in`.sunil.spectre.network.api.artist.ArtistDetailResponse
 import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.util.toClassData
 import android.content.Context
+import android.util.Log
 import io.reactivex.Flowable
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +22,7 @@ class NetworkService {
         val TAG = NetworkService::class.java.simpleName
 
         const val SPOTIFY_BASE_URL = "https://api.spotify.com/v1"
-
+        var cacheSize = 1 * 1024 * 1024L // 1 MB
     }
 
     private var accessToken: String? = ""
@@ -32,6 +34,7 @@ class NetworkService {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         this.okHttpClient = okHttpClient.newBuilder()
+                .cache(Cache(context.cacheDir, cacheSize))
                 .addInterceptor { chain ->
 
                     val originalRequest = chain.request()
@@ -55,9 +58,16 @@ class NetworkService {
 
             val url = "$SPOTIFY_BASE_URL/search?q=$query&type=album,track"
 
-            val request = Request.Builder().url(url).build()
+            val request = Request.Builder()
+                    .url(url).build()
 
             val response = okHttpClient.newCall(request).execute()
+
+            if (response.networkResponse() == null) {
+                Log.d(TAG, "Testing4 Okhttp: Cache")
+            } else if (response.cacheResponse() == null) {
+                Log.d(TAG, "Testing4 okhttp : Network")
+            }
 
             val searchResponse = response.body()?.string()?.toClassData(SearchResponse::class.java)
             return@Callable searchResponse

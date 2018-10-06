@@ -7,21 +7,22 @@
     <color name="transparent">#00ffffff</color>
     <color name="melonRed">#f47480</color>
     <color name="green">#60b245</color>
+
+    <color name="white90">#e6ffffff</color>
+    <color name="white80">#ccffffff</color>
     <color name="white70">#b3ffffff</color>
     <color name="white">#ffffffff</color>
 
-
     <color name="blackGrape100">#282c3f</color>
-    <color name="blackGrape100_90">#e6282c3f</color>
-    <color name="blackGrape100_10">#19282c3f</color>
     <color name="blackGrape90">#3e4152</color>
     <color name="blackGrape80">#535766</color>
     <color name="blackGrape70">#686b78</color>
     <color name="blackGrape60">#7e808c</color>
+    <color name="blackGrape10">#e9e9eb</color>
+    <color name="blackGrape0">#f4f4f5</color>
 
     <color name="guavaGreen110">#569f3e</color>
     <color name="guavaGreen100">#60b245</color>
-    <color name="guavaGreen100Alpha50">#8060b245</color>
     <color name="guavaGreen30">#cfe7c7</color>
 
 </resources>

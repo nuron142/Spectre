@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="in.sunil.spectre.ui.activity.search.viewmodels.SearchTrackViewModel"/>
+            type="in.sunil.spectre.ui.activity.search.viewmodels.SearchAlbumViewModel"/>
 
     </data>
 
@@ -38,15 +38,15 @@
         </android.support.v7.widget.CardView>
 
         <TextView
-            android:id="@+id/trackName"
+            android:id="@+id/albumName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:layout_marginStart="16dp"
             android:maxLines="2"
-            android:text="@{vm.trackName, default=`Death Star`}"
-            android:textColor="@color/blackGrape80"
-            android:textSize="18sp"
+            android:text="@{vm.albumName, default=`Death Star`}"
+            android:textColor="@color/blackGrape70"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/image"
@@ -68,25 +68,25 @@
             android:textColor="@color/blackGrape60"
             android:textSize="12sp"
             android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/trackName"
+            app:layout_constraintStart_toStartOf="@+id/albumName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/albumName"
-            app:layout_constraintTop_toBottomOf="@+id/trackName"/>
+            app:layout_constraintBottom_toTopOf="@+id/albumReleaseDate"
+            app:layout_constraintTop_toBottomOf="@+id/albumName"/>
 
 
         <TextView
-            android:id="@+id/albumName"
+            android:id="@+id/albumReleaseDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{vm.albumName, default=`Darth Vader`}"
+            android:text="@{vm.albumReleaseDate, default=`Darth Vader`}"
             android:textColor="@color/blackGrape60"
             android:textSize="12sp"
             android:fontFamily="monospace"
             android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/trackName"
+            app:layout_constraintStart_toStartOf="@+id/albumName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/image"
             app:layout_constraintTop_toBottomOf="@+id/albumArtists"/>

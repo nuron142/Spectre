@@ -2,8 +2,9 @@ package `in`.sunil.spectre.ui.activity.search
 
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.network.api.search.SearchResponse
-import `in`.sunil.spectre.ui.adapter.SearchArtistViewModel
-import `in`.sunil.spectre.ui.adapter.SearchTrackViewModel
+import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchAlbumViewModel
+import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchHeaderViewModel
+import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchTrackViewModel
 import `in`.sunil.spectre.ui.adapter.ViewModel
 import `in`.sunil.spectre.util.getJson
 import `in`.sunil.spectre.util.isNotEmpty
@@ -23,6 +24,13 @@ import javax.inject.Inject
  * Created by Sunil on 10/5/18.
  */
 class SearchActivityViewModel {
+
+    companion object {
+
+        const val VIEW_TYPE_ARTIST = 0
+        const val VIEW_TYPE_TRACK = 1
+        const val VIEW_TYPE_HEADER = 2
+    }
 
     @Inject
     lateinit var networkService: NetworkService
@@ -91,14 +99,26 @@ class SearchActivityViewModel {
 
             dataSet.clear()
 
+            if (albums?.items?.size ?: 0 > 0) {
+
+                val searchHeaderViewModel = SearchHeaderViewModel("ALBUMS")
+                dataSet.add(searchHeaderViewModel)
+            }
+
             albums?.items?.forEach { album ->
 
                 if (album.name != null) {
-                    val searchArtistViewModel = SearchArtistViewModel(album) { artistId ->
+                    val searchArtistViewModel = SearchAlbumViewModel(album) { artistId ->
                         searchActivityService.openTrackPage(artistId)
                     }
                     dataSet.add(searchArtistViewModel)
                 }
+            }
+
+            if (tracks?.items?.size ?: 0 > 0) {
+
+                val searchHeaderViewModel = SearchHeaderViewModel("TRACKS")
+                dataSet.add(searchHeaderViewModel)
             }
 
             tracks?.items?.forEach { track ->
