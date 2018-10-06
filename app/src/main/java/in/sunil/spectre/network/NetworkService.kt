@@ -5,7 +5,6 @@ import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.network.api.toptracks.ArtistTopAlbumsResponse
 import `in`.sunil.spectre.util.toClassData
 import android.content.Context
-import android.util.Log
 import io.reactivex.Flowable
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -59,16 +58,9 @@ class NetworkService {
 
             val url = "$SPOTIFY_BASE_URL/search?q=$query&type=album,track"
 
-            val request = Request.Builder()
-                    .url(url).build()
+            val request = Request.Builder().url(url).build()
 
             val response = okHttpClient.newCall(request).execute()
-
-            if (response.networkResponse() == null) {
-                Log.d(TAG, "Testing4 Okhttp: Cache")
-            } else if (response.cacheResponse() == null) {
-                Log.d(TAG, "Testing4 okhttp : Network")
-            }
 
             val searchResponse = response.body()?.string()?.toClassData(SearchResponse::class.java)
             return@Callable searchResponse
@@ -102,11 +94,10 @@ class NetworkService {
 
             val response = okHttpClient.newCall(request).execute()
 
-            val topAlbumsResponse = response.body()?.string()?.toClassData(ArtistTopAlbumsResponse::class.java)
+            val artistTopAlbumsResponse = response.body()?.string()?.toClassData(ArtistTopAlbumsResponse::class.java)
 
-            return@Callable topAlbumsResponse
+            return@Callable artistTopAlbumsResponse
         })
     }
-
 
 }
