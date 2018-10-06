@@ -46,11 +46,23 @@ class SearchAlbumViewModel : ViewModel {
 
     private fun getFormattedReleaseDate(dateString: String): String {
 
-        val format = SimpleDateFormat("yyyy-MM-dd")
-        val date = format.parse(dateString)
+        try {
 
-        val newFormat = SimpleDateFormat("MMM yyyy")
-        return newFormat.format(date)
+            val pattern = when (album.releaseDatePrecision) {
+                "day" -> "yyyy-MM-dd"
+                "month" -> "yyyy-MM"
+                else -> "yyyy"
+            }
+
+            val format = SimpleDateFormat(pattern)
+            val date = format.parse(dateString)
+
+            val newFormat = SimpleDateFormat("MMM yyyy")
+            return newFormat.format(date)
+
+        } catch (t: Throwable) {
+            return ""
+        }
     }
 
     fun onClick() = {

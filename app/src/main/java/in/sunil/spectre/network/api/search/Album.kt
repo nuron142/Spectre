@@ -25,6 +25,9 @@ class Album {
     @SerializedName("release_date")
     val releaseDate: String? = null
 
+    @SerializedName("release_date_precision")
+    val releaseDatePrecision: String? = null
+
     @SerializedName("total_tracks")
     val totalTracks: String? = null
 
