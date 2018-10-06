@@ -109,7 +109,7 @@ class SearchActivityViewModel {
 
                 if (album.name != null) {
                     val searchArtistViewModel = SearchAlbumViewModel(album) { artistId ->
-                        searchActivityService.openTrackPage(artistId)
+                        searchActivityService.openArtistDetailPage(artistId)
                     }
                     dataSet.add(searchArtistViewModel)
                 }
@@ -125,8 +125,8 @@ class SearchActivityViewModel {
 
                 if (track.name != null) {
 
-                    val searchArtistViewModel = SearchTrackViewModel(track) {
-                        searchActivityService.showTrackPageError()
+                    val searchArtistViewModel = SearchTrackViewModel(track) { artistId ->
+                        searchActivityService.openArtistDetailPage(artistId)
                     }
 
                     dataSet.add(searchArtistViewModel)

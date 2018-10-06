@@ -16,11 +16,11 @@ class SearchTrackViewModel : ViewModel {
     val albumImageUrl = ObservableField<String>("")
 
     val name = ObservableField<String>("")
-    private var onClickAction: () -> Unit
+    private var onClickAction: (String) -> Unit
 
     private val track: Track
 
-    constructor(track: Track, onClickAction: () -> Unit) {
+    constructor(track: Track, onClickAction: (String) -> Unit) {
 
         this.track = track
         this.onClickAction = onClickAction
@@ -45,7 +45,7 @@ class SearchTrackViewModel : ViewModel {
 
     fun onClick() = {
 
-        onClickAction.invoke()
+        track.album?.artists?.firstOrNull()?.id?.let { id -> onClickAction.invoke(id) }
     }
 
     override fun getType(): Int {

@@ -19,7 +19,7 @@ class SearchActivityService : ISearchActivityService {
         this.searchActivityBinding = searchActivityBinding
     }
 
-    override fun openTrackPage(artistId: String) {
+    override fun openArtistDetailPage(artistId: String) {
 
         ArtistDetailActivity.launch(context, artistId)
     }

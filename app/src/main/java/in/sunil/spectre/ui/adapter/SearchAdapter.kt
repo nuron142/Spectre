@@ -26,6 +26,43 @@ class SearchAdapter : RecyclerView.Adapter<BindingHolder> {
         setUpListener()
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
+
+        val binding: ViewDataBinding
+
+        val layoutId = when (viewType) {
+
+            SearchActivityViewModel.VIEW_TYPE_ARTIST -> R.layout.item_search_album
+
+            SearchActivityViewModel.VIEW_TYPE_TRACK -> R.layout.item_search_track
+
+            SearchActivityViewModel.VIEW_TYPE_HEADER -> R.layout.item_search_header
+
+            else -> R.layout.item_search_header
+        }
+
+        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
+
+        return BindingHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: BindingHolder, position: Int) {
+
+        holder.binding.setVariable(BR.vm, dataSet[position])
+        holder.binding.executePendingBindings()
+    }
+
+    override fun getItemCount(): Int {
+
+        return dataSet.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+
+        return dataSet[position].getType()
+    }
+
+
     private fun setUpListener() {
 
         dataSet.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<ViewModel>>() {
@@ -56,41 +93,5 @@ class SearchAdapter : RecyclerView.Adapter<BindingHolder> {
             }
         })
 
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder {
-
-        val binding: ViewDataBinding
-
-        val layoutId =
-                when (viewType) {
-
-                    SearchActivityViewModel.VIEW_TYPE_ARTIST -> R.layout.item_search_album
-
-                    SearchActivityViewModel.VIEW_TYPE_TRACK -> R.layout.item_search_track
-
-                    SearchActivityViewModel.VIEW_TYPE_HEADER -> R.layout.item_search_header
-
-                    else -> R.layout.item_search_header
-                }
-
-        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
-
-        return BindingHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: BindingHolder, position: Int) {
-
-        holder.binding.setVariable(BR.vm, dataSet[position])
-        holder.binding.executePendingBindings()
-    }
-
-    override fun getItemCount(): Int {
-        return dataSet.size
-    }
-
-    override fun getItemViewType(position: Int): Int {
-
-        return dataSet[position].getType()
     }
 }
