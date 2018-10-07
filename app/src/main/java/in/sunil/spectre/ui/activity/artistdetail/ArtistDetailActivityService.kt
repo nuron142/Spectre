@@ -1,5 +1,6 @@
 package `in`.sunil.spectre.ui.activity.artistdetail
 
+import `in`.sunil.spectre.R
 import `in`.sunil.spectre.databinding.ActivityArtistDetailBinding
 import android.app.Activity
 import android.support.design.widget.Snackbar
@@ -26,7 +27,7 @@ class ArtistDetailActivityService : IArtistDetailActivityService {
 
     override fun showError() {
 
-        Snackbar.make(artistDetailBinding.root, "Something went wrong. Please try again", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(artistDetailBinding.root, activity.getString(R.string.general_error), Snackbar.LENGTH_SHORT).show()
     }
 
 }

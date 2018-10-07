@@ -49,7 +49,7 @@ class LoginActivityService : ILoginActivityService {
 
     override fun showLoginFailed() {
 
-        Snackbar.make(loginBinding.root, "Login Failed. Please try again", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(loginBinding.root, activity.getString(R.string.login_error), Snackbar.LENGTH_SHORT).show()
     }
 
 }

@@ -127,6 +127,8 @@ class SearchActivityViewModel {
 
     private fun handleSearchFailed() {
 
+        dataSet.clear()
+
         showProgress.set(false)
         searchActivityService.showError()
 
