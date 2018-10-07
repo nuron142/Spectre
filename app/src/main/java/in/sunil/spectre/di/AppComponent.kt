@@ -7,6 +7,7 @@ import `in`.sunil.spectre.ui.activity.artistdetail.ArtistDetailActivityViewModel
 import `in`.sunil.spectre.ui.activity.login.LoginActivityViewModel
 import `in`.sunil.spectre.ui.activity.search.SearchActivity
 import `in`.sunil.spectre.ui.activity.search.SearchActivityViewModel
+import `in`.sunil.spectre.ui.receiver.NetworkChangeReceiver
 import dagger.Component
 import javax.inject.Singleton
 
@@ -31,5 +32,7 @@ interface AppComponent {
     fun inject(artistDetailActivityViewModel: ArtistDetailActivityViewModel)
 
     fun inject(loginActivityViewModel: LoginActivityViewModel)
+
+    fun inject(networkChangeReceiver: NetworkChangeReceiver)
 
 }

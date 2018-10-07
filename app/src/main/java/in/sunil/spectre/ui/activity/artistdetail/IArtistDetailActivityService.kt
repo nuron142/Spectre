@@ -7,4 +7,6 @@ package `in`.sunil.spectre.ui.activity.artistdetail
 interface IArtistDetailActivityService {
 
     fun closeArtistDetail()
+
+    fun showError()
 }

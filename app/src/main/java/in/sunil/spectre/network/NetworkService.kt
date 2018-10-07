@@ -3,9 +3,11 @@ package `in`.sunil.spectre.network
 import `in`.sunil.spectre.network.api.artist.ArtistDetailResponse
 import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.network.api.toptracks.ArtistTopAlbumsResponse
+import `in`.sunil.spectre.util.Utilities
 import `in`.sunil.spectre.util.toClassData
 import android.content.Context
 import io.reactivex.Flowable
+import io.reactivex.processors.PublishProcessor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -15,7 +17,7 @@ import java.util.concurrent.Callable
 /**
  * Created by Sunil on 10/4/18.
  */
-class NetworkService {
+class NetworkService : INetworkService {
 
     companion object {
 
@@ -26,9 +28,15 @@ class NetworkService {
     }
 
     private var accessToken: String? = ""
+
+    private val context: Context
     private val okHttpClient: OkHttpClient
 
+    private val networkChangeSubject = PublishProcessor.create<Boolean>()
+
     constructor(context: Context, okHttpClient: OkHttpClient) {
+
+        this.context = context
 
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -48,11 +56,22 @@ class NetworkService {
                 .build()
     }
 
-    fun setAccessToken(accessToken: String?) {
+    override fun setAccessToken(accessToken: String?) {
         this.accessToken = accessToken
     }
 
-    fun getSearchQueryFlowable(query: String): Flowable<SearchResponse> {
+    override fun setNetworkChanged() {
+
+        networkChangeSubject.onNext(Utilities.isNetworkAvailable(context))
+    }
+
+    override fun subscribeNetworkChangeSubject(): Flowable<Boolean> {
+
+        return networkChangeSubject.hide().distinctUntilChanged()
+    }
+
+
+    override fun getSearchQueryFlowable(query: String): Flowable<SearchResponse> {
 
         return Flowable.fromCallable(Callable {
 
@@ -65,7 +84,7 @@ class NetworkService {
         })
     }
 
-    fun getArtistDetailFlowable(artistID: String): Flowable<ArtistDetailResponse> {
+    override fun getArtistDetailFlowable(artistID: String): Flowable<ArtistDetailResponse> {
 
         return Flowable.fromCallable(Callable {
 
@@ -79,7 +98,7 @@ class NetworkService {
     }
 
 
-    fun getArtistTopAlbumsFlowable(artistID: String): Flowable<ArtistTopAlbumsResponse> {
+    override fun getArtistTopAlbumsFlowable(artistID: String): Flowable<ArtistTopAlbumsResponse> {
 
         return Flowable.fromCallable(Callable {
 

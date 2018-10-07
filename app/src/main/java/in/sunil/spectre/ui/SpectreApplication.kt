@@ -3,7 +3,10 @@ package `in`.sunil.spectre.ui
 import `in`.sunil.spectre.di.AppComponent
 import `in`.sunil.spectre.di.AppModule
 import `in`.sunil.spectre.di.DaggerAppComponent
+import `in`.sunil.spectre.ui.receiver.NetworkChangeReceiver
 import android.app.Application
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import io.reactivex.plugins.RxJavaPlugins
 
 /**
@@ -18,6 +21,8 @@ class SpectreApplication : Application() {
         setUpDaggerModule()
 
         RxJavaPlugins.setErrorHandler { e -> }
+
+        registerReceiver(NetworkChangeReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setUpDaggerModule() {

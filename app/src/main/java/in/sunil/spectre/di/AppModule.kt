@@ -1,5 +1,6 @@
 package `in`.sunil.spectre.di
 
+import `in`.sunil.spectre.network.INetworkService
 import `in`.sunil.spectre.network.NetworkService
 import `in`.sunil.spectre.ui.SpectreApplication
 import dagger.Module
@@ -29,7 +30,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideNetworkService(okHttpClient: OkHttpClient): NetworkService {
+    fun provideNetworkService(okHttpClient: OkHttpClient): INetworkService {
         return NetworkService(spectreApplication, okHttpClient)
     }
 }

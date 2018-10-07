@@ -1,6 +1,6 @@
 package `in`.sunil.spectre.ui.activity.login
 
-import `in`.sunil.spectre.network.NetworkService
+import `in`.sunil.spectre.network.INetworkService
 import `in`.sunil.spectre.util.delayOnMainThread
 import `in`.sunil.spectre.util.isNotEmpty
 import android.content.Intent
@@ -21,7 +21,7 @@ class LoginActivityViewModel {
     }
 
     @Inject
-    lateinit var networkService: NetworkService
+    lateinit var networkService: INetworkService
 
     private val loginActivityService: ILoginActivityService
 

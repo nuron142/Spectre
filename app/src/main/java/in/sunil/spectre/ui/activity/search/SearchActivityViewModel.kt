@@ -1,13 +1,12 @@
 package `in`.sunil.spectre.ui.activity.search
 
 import `in`.sunil.spectre.R
-import `in`.sunil.spectre.network.NetworkService
+import `in`.sunil.spectre.network.INetworkService
 import `in`.sunil.spectre.network.api.search.SearchResponse
 import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchAlbumViewModel
 import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchHeaderViewModel
 import `in`.sunil.spectre.ui.activity.search.viewmodels.SearchTrackViewModel
 import `in`.sunil.spectre.ui.adapter.ViewModel
-import `in`.sunil.spectre.util.getJson
 import `in`.sunil.spectre.util.isNotEmpty
 import `in`.sunil.spectre.util.toFlowable
 import android.databinding.ObservableArrayList
@@ -32,7 +31,7 @@ class SearchActivityViewModel {
     }
 
     @Inject
-    lateinit var networkService: NetworkService
+    lateinit var networkService: INetworkService
 
     var dataSet = ObservableArrayList<ViewModel>()
 
@@ -51,6 +50,8 @@ class SearchActivityViewModel {
 
     val showProgress = ObservableBoolean(false)
     var searchQuery = ObservableField<String>("")
+
+    private var shouldRetryApiCall = false
 
     constructor(searchActivityService: ISearchActivityService) {
 
@@ -77,14 +78,28 @@ class SearchActivityViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ query ->
                     getSearchList(query)
-                }, { e -> Log.d(SearchActivity.TAG, "" + e.message) }))
+                }, { e -> Log.d(TAG, "" + e.message) }))
+
+
+        disposable.add(networkService.subscribeNetworkChangeSubject()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ networkAvailable ->
+
+                    if (networkAvailable && shouldRetryApiCall) {
+                        shouldRetryApiCall = false
+                        getSearchList(searchQuery.get())
+                    }
+
+                }, { e -> Log.d(TAG, "" + e.message) }))
+
     }
 
-    private fun getSearchList(query: String) {
+    private fun getSearchList(query: String?) {
 
         searchDisposable?.dispose()
 
-        if (query.isNotEmpty()) {
+        if (query != null && !query.isEmpty()) {
 
             showProgress.set(true)
             showCloseButton.set(true)
@@ -98,7 +113,7 @@ class SearchActivityViewModel {
 
                     }, { e ->
 
-                        Log.e(SearchActivity.TAG, "Error : $e")
+                        Log.e(TAG, "Error : $e")
                         handleSearchFailed()
                     })
 
@@ -113,6 +128,9 @@ class SearchActivityViewModel {
     private fun handleSearchFailed() {
 
         showProgress.set(false)
+        searchActivityService.showError()
+
+        shouldRetryApiCall = true
     }
 
 
@@ -155,6 +173,10 @@ class SearchActivityViewModel {
 
                     dataSet.add(searchArtistViewModel)
                 }
+            }
+
+            if (dataSet.size == 0) {
+                searchActivityService.showNoResultsFound()
             }
         }
     }
