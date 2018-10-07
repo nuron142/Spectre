@@ -9,6 +9,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.android.databinding.library.baseAdapters.BR
 
+/*
+    Base recyclerview adapter which supports databinding
+ */
+
 /**
  * Created by Sunil on 10/5/18.
  */

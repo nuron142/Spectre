@@ -65,6 +65,7 @@ class NetworkService : INetworkService {
         networkChangeSubject.onNext(Utilities.isNetworkAvailable(context))
     }
 
+    //Classes can subscribe for network change events
     override fun subscribeNetworkChangeSubject(): Flowable<Boolean> {
 
         return networkChangeSubject.hide().distinctUntilChanged()
