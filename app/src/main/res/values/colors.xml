@@ -3,12 +3,10 @@
     <color name="colorPrimary">#0bb279</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#0bb279</color>
+
     <color name="black">#535766</color>
     <color name="transparent">#00ffffff</color>
-    <color name="melonRed">#f47480</color>
-    <color name="green">#60b245</color>
 
-    <color name="white90">#e6ffffff</color>
     <color name="white80">#ccffffff</color>
     <color name="white70">#b3ffffff</color>
     <color name="white">#ffffff</color>
@@ -18,11 +16,7 @@
     <color name="blackGrape80">#535766</color>
     <color name="blackGrape70">#686b78</color>
     <color name="blackGrape60">#7e808c</color>
-    <color name="blackGrape10">#e9e9eb</color>
-    <color name="blackGrape0">#f4f4f5</color>
 
-    <color name="guavaGreen110">#569f3e</color>
     <color name="guavaGreen100">#60b245</color>
-    <color name="guavaGreen30">#cfe7c7</color>
 
 </resources>
